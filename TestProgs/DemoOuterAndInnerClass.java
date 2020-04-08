@@ -1,0 +1,65 @@
+import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+class BankAcct
+{
+  // balance amount is the variable;
+  private double bal;
+  
+  // initialize the balance;
+  BankAcct(double b)
+  {
+    bal = b;
+  }
+  
+  // In this methid, inner class object is created after verifying the 
+  // authenticationof user. r is rate of interest.
+  // this method accepts rate of interest r
+  void contact(double r) throws IOException
+  {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("Enter password: ");
+    String pw = br.readLine();
+    
+    if (pw.equals("xy123"))
+    {
+      Interest in = new Interest(r);
+      in.calculateInterest();
+    } else {
+      System.out.println("Sorry, you are not an authorized person.");
+      return;
+    } // end of if-else
+  }
+  
+  private class Interest
+  {
+    // rate of interest
+    private double rate;
+  
+    // Initialize the rate
+    Interest(double r)
+    {
+      rate = r;
+    }      
+    
+    // calculate interest amount and update balance
+    void calculateInterest()
+    {
+      double interest = bal * rate/100;
+      bal += interest; 
+      System.out.println("Updated balance = " + bal);
+    }
+  }
+  
+}
+
+// using inner class
+class DemoOuterAndInnerClass
+{
+  public static void main(String[] args) throws IOException
+  {
+    BankAcct Account = new BankAcct(10000);
+    Account.contact(9.5);
+  }
+}
